@@ -144,7 +144,7 @@ export function validateRepository(root = DEFAULT_ROOT) {
         if (SENSITIVE_PATH.test(rel)) errors.push('배포 저장소에서 금지된 파일 경로: ' + rel);
         if (fs.lstatSync(path.join(root, ...rel.split('/'))).isSymbolicLink()) errors.push('심볼릭 링크를 허용하지 않습니다: ' + rel);
     }
-    for (const required of ['LICENSE', 'README.md', 'THIRD_PARTY_NOTICES.md', 'SECURITY.md']) {
+    for (const required of ['README.md', 'THIRD_PARTY_NOTICES.md', 'SECURITY.md']) {
         if (!fs.existsSync(path.join(root, required))) errors.push('필수 안내 파일 누락: ' + required);
     }
     return { errors, catalog };

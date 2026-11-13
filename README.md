@@ -51,6 +51,6 @@ node --test scripts/validate-release.test.mjs
 
 ## 라이선스와 출처
 
-이 저장소의 자체 문서·검증 도구는 저장소 [MIT 라이선스](LICENSE)의 적용을 받습니다.
-**제3자가 작성한 원본 소스의 재배포 허락을 대신하지 않습니다.**
-파생 플러그인 공개 전에는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)의 권리 상태를 반드시 확인해야 합니다.
+이 저장소에는 일괄 적용하는 LICENSE 파일을 두지 않습니다.
+기반 프로젝트의 출처와 확인된 고지는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 기록합니다.
+원본에 LICENSE 파일이 없다는 사실만으로 원저작자의 허용·금지 의도를 추정하지 않습니다.
