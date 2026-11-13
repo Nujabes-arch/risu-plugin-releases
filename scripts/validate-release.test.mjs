@@ -29,7 +29,7 @@ function fixture(t) {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'risu-release-test-'));
     t.after(() => fs.rmSync(root, { recursive: true, force: true }));
     fs.mkdirSync(path.join(root, 'plugins', 'loreqa-bg'), { recursive: true });
-    for (const f of ['LICENSE', 'README.md', 'THIRD_PARTY_NOTICES.md', 'SECURITY.md']) {
+    for (const f of ['README.md', 'THIRD_PARTY_NOTICES.md', 'SECURITY.md']) {
         fs.writeFileSync(path.join(root, f), f + '\n');
     }
     const entry = basicEntry();
@@ -39,8 +39,9 @@ function fixture(t) {
     return { root, entry, catalog, save };
 }
 
-test('planned entries pass without publishing an executable JS', t => {
+test('planned entries pass without an executable JS or repository LICENSE', t => {
     const { root } = fixture(t);
+    assert.equal(fs.existsSync(path.join(root, 'LICENSE')), false);
     assert.deepEqual(validateRepository(root).errors, []);
 });
 test('unapproved source cannot be added under a planned entry', t => {
