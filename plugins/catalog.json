@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "plugins": [
+    {
+      "slug": "loreqa-bg",
+      "pluginName": "LoreQA-BG-Experimental",
+      "displayName": "원작견 BG",
+      "status": "planned",
+      "version": null,
+      "file": "plugins/loreqa-bg/LoreQA-BG.js",
+      "updateUrl": "https://raw.githubusercontent.com/Nujabes-arch/risu-plugin-releases/main/plugins/loreqa-bg/LoreQA-BG.js",
+      "thirdPartyRightsConfirmed": false,
+      "risuRuntimeVerified": false
+    }
+  ]
+}
