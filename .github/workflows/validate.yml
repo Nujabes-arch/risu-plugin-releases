@@ -1,0 +1,28 @@
+name: Validate release repository
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out public repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate release catalog and artifacts
+        run: node scripts/validate-release.mjs
+      - name: Run validator regression tests
+        run: node --test scripts/validate-release.test.mjs

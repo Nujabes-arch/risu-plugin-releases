@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+*.log
+*.tmp
+*.bak
+.env
+.env.*
+secrets/
+private/
+*.risum
+*.risup
+*.pem
+*.key
+*.p12
+*.pfx
