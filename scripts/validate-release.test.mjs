@@ -49,7 +49,7 @@ test('unapproved source cannot be added under a planned entry', t => {
     fs.writeFileSync(path.join(root, entry.file), js('0.2.0'));
     assert.match(validateRepository(root).errors.join(' '), /planned 상태/);
 });
-test('publishing requires both human-recorded rights and runtime validation', t => {
+test('stable publishing requires both human-recorded rights and runtime validation', t => {
     const { root, entry, save } = fixture(t);
     entry.status = 'published';
     entry.version = '0.2.0';
@@ -61,16 +61,41 @@ test('publishing requires both human-recorded rights and runtime validation', t 
     save();
     assert.deepEqual(validateRepository(root).errors, []);
 });
+test('preview requires explicit approval while preserving unverified facts and artifact checks', t => {
+    const { root, entry, save } = fixture(t);
+    Object.assign(entry, { status: 'published', releaseChannel: 'preview', version: '0.3.1' });
+    fs.writeFileSync(path.join(root, entry.file), js('0.3.1'));
+    save();
+    assert.match(validateRepository(root).errors.join(' '), /명시적 게시 승인/);
+    entry.publicationApproved = true;
+    save();
+    assert.deepEqual(validateRepository(root).errors, []);
+    assert.equal(entry.thirdPartyRightsConfirmed, false);
+    assert.equal(entry.risuRuntimeVerified, false);
+    fs.writeFileSync(path.join(root, entry.file), js('0.3.0'));
+    assert.match(validateRepository(root).errors.join(' '), /version/);
+    entry.releaseChannel = 'unknown';
+    save();
+    assert.match(validateRepository(root).errors.join(' '), /releaseChannel/);
+    entry.releaseChannel = 'stable';
+    save();
+    assert.match(validateRepository(root).errors.join(' '), /권리 확인/);
+});
+
 test('mismatched name, version, or update URL fails validation', () => {
     const entry = { ...basicEntry(), status: 'published', version: '0.2.0' };
     const mutated = js('0.2.1').replace('//@name LoreQA-BG-Experimental', '//@name WrongPlugin')
         .replace(RAW_BASE + FILE, 'https://example.com/untrusted.js');
     assert.equal(validatePluginSource(mutated, entry).filter(e => /다릅니다/.test(e)).length, 3);
 });
-test('version must appear within the first 512 UTF-8 bytes', () => {
+test('version must end within the host import limit of 500 UTF-8 bytes', () => {
     const entry = { ...basicEntry(), status: 'published', version: '0.2.0' };
     const longHeader = '// ' + '가'.repeat(180) + '\n' + js('0.2.0');
-    assert.match(validatePluginSource(longHeader, entry).join(' '), /512바이트/);
+    assert.match(validatePluginSource(longHeader, entry).join(' '), /500바이트/);
+    const index = js('0.2.0').indexOf('//@version');
+    const prefixBytes = Buffer.byteLength(js('0.2.0').slice(0, index) + '//@version 0.2.0', 'utf8');
+    const justOver = '// ' + 'x'.repeat(501 - prefixBytes - 4) + '\n' + js('0.2.0');
+    assert.match(validatePluginSource(justOver, entry).join(' '), /500바이트/);
 });
 test('private keys and token-like strings in release JS are blocked', () => {
     const entry = { ...basicEntry(), status: 'published', version: '0.2.0' };

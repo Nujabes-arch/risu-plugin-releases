@@ -53,8 +53,8 @@ export function validatePluginSource(source, entry) {
     const versionLine = source.match(/^\/\/@version[ \t]+\S+.*$/m)?.[0];
     if (versionLine) {
         const index = source.indexOf(versionLine);
-        if (Buffer.byteLength(source.slice(0, index) + versionLine, 'utf8') > 512) {
-            errors.push('//@version은 파일 시작 512바이트 안에 있어야 합니다.');
+        if (Buffer.byteLength(source.slice(0, index) + versionLine, 'utf8') > 500) {
+            errors.push('//@version은 파일 시작 500바이트 안에 있어야 합니다.');
         }
     }
     if (Buffer.byteLength(source, 'utf8') > 5 * 1024 * 1024) errors.push('배포 JS가 5 MiB 상한을 초과했습니다.');
@@ -106,8 +106,14 @@ export function validateCatalog(catalog, root = DEFAULT_ROOT) {
             if (entry.thirdPartyRightsConfirmed || entry.risuRuntimeVerified) {
                 errors.push(slug + ': planned 항목의 출시 확인값이 잘못됐습니다.');
             }
+            if (entry.publicationApproved) errors.push(slug + ': planned 항목은 게시 승인 상태일 수 없습니다.');
         } else if (entry.status === 'published') {
-            if (!entry.thirdPartyRightsConfirmed || !entry.risuRuntimeVerified) {
+            if (entry.releaseChannel && !['stable', 'preview'].includes(entry.releaseChannel)) {
+                errors.push(slug + ': releaseChannel은 stable 또는 preview여야 합니다.');
+            }
+            if (entry.releaseChannel === 'preview') {
+                if (entry.publicationApproved !== true) errors.push(slug + ': preview 게시에는 명시적 게시 승인이 필요합니다.');
+            } else if (!entry.thirdPartyRightsConfirmed || !entry.risuRuntimeVerified) {
                 errors.push(slug + ': 권리 확인 및 RisuAI 실사용 검증이 끝나기 전에는 공개할 수 없습니다.');
             }
             if (typeof entry.version !== 'string' || !/^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/.test(entry.version)) {
