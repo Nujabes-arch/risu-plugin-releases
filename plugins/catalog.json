@@ -8,7 +8,7 @@
       "status": "published",
       "releaseChannel": "preview",
       "publicationApproved": true,
-      "version": "0.3.1",
+      "version": "0.3.2",
       "file": "plugins/loreqa-bg/LoreQA-BG.js",
       "updateUrl": "https://raw.githubusercontent.com/Nujabes-arch/risu-plugin-releases/main/plugins/loreqa-bg/LoreQA-BG.js",
       "thirdPartyRightsConfirmed": false,

@@ -4,7 +4,7 @@ RisuAI/PocketRisu 플러그인의 공개 배포 파일을 보관합니다. 개�
 
 | 플러그인 | 버전 | 채널 | 다운로드 |
 | --- | --- | --- | --- |
-| 캐논 가이드 (`LoreQA-BG-Experimental`) | 0.3.1 | 개발판 (preview) | [LoreQA-BG.js](https://raw.githubusercontent.com/Nujabes-arch/risu-plugin-releases/main/plugins/loreqa-bg/LoreQA-BG.js) |
+| 캐논 가이드 (`LoreQA-BG-Experimental`) | 0.3.2 | 개발판 (preview) | [LoreQA-BG.js](https://raw.githubusercontent.com/Nujabes-arch/risu-plugin-releases/main/plugins/loreqa-bg/LoreQA-BG.js) |
 
 캐논 가이드는 원작 설정 참고와 답변 뒤 BG 분석을 제공하는 플러그인입니다.
 설치·모델·검색 설정은 [플러그인 안내](plugins/loreqa-bg/README.md), 변경점은 [변경 기록](plugins/loreqa-bg/CHANGELOG.md)을 참고하세요.
