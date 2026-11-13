@@ -6,7 +6,7 @@
 ## 캐논 가이드 (구 원작견 BG)
 
 - 기반 프로젝트: [akmoonge/LoreQAcustom](https://github.com/akmoonge/LoreQAcustom)
-- 공개 파일: `plugins/loreqa-bg/LoreQA-BG.js`, 0.3.1 개발판
+- 공개 파일: `plugins/loreqa-bg/LoreQA-BG.js`, 0.3.2 개발판
 - 게시 경위: 사용자가 RisuAI 업데이트 버튼으로 새 버전을 받을 수 있도록 공개 파일 게시를 요청했습니다.
 - 확인 상태: 원저작자의 별도 재배포 허락을 확인한 것은 아닙니다. catalog의 `thirdPartyRightsConfirmed`는 false를 유지합니다.
 - 이 게시 요청을 원저작자의 허락이나 새로운 라이선스로 간주하지 않습니다.
